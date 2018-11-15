@@ -6,6 +6,7 @@ const {
   Validator,
   ValidationError
 } = require("express-json-validator-middleware");
+const logger = require("./src/winston");
 
 
 const updateCredit = require("./src/controllers/updateCredit");
@@ -36,7 +37,7 @@ app.post(
 
 
 app.use(function(err, req, res, next) {
-  console.log(res.body);
+  logger.info(res.body);
   if (err instanceof ValidationError) {
     res.sendStatus(400);
   } else {
@@ -45,6 +46,6 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9017, function() {
-  console.log("App started on PORT 9017");
+  log.info("App started on PORT 9017");
 });
 

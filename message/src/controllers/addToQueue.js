@@ -7,7 +7,7 @@ const sendMessage = require('./sendMessage');
 const uuidv4 = require('uuid/v4');
 const savePendingMessage = require('./savePendingMessage');
 const braker = require('../circuitBreaker');
-
+const logger = require("../winston");
 let blockQueue = false
 
 module.exports = function (req, res) {
@@ -32,7 +32,7 @@ module.exports = function (req, res) {
 queue.process("creditChecked", function (job, ctx, done) {
   if (braker.isOpen()) {
     ctx.pause(0, function (err) {
-      console.log("Worker is paused... ");
+      logger.info("Worker is paused... ");
       setTimeout(function () {
         ctx.resume();
       }, 20000);
@@ -45,14 +45,14 @@ queue.on('job enqueue', function (id, type) {
   queue.inactiveCount(function (err, total) {
     if (total >= process.env.QUEUE_MAX) {
       blockQueue = true
-      console.log('the queue is locked')
+      logger.info('the queue is locked')
     }
   });
 }).on('job complete', function (id, result) {
   queue.inactiveCount(function (err, total) {
     if (total <= process.env.QUEUE_WORK) {
     blockQueue = false
-    console.log('the queue is open')
+    logger.info('the queue is open')
     }
   });
 });

@@ -2,6 +2,7 @@ const http = require("http");
 const express = require("express");
 require("./src/controllers/addToQueue");
 const addToQueue = require("./src/controllers/addToQueue");
+const logger = require("./src/winston");
 
 const bodyParser = require("body-parser");
 const {
@@ -55,7 +56,7 @@ app.get("/health", getStatus);
 app.get("/version", getVersion);
 
 app.use(function(err, req, res, next) {
-  console.log(res.body);
+  logger.info(res.body);
   if (err instanceof ValidationError) {
     res.sendStatus(400);
   } else {
@@ -64,5 +65,5 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9007, function() {
-  console.log("App started on PORT 9007");
+  logger.info("App started on PORT 9007");
 });

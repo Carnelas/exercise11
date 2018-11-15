@@ -7,7 +7,7 @@ const util = require("util");
 const logger = require("../winston");
 
 module.exports = function(message, done) {
-  console.log(message);
+  logger.info(message);
   const body = JSON.stringify(message);
   const idQuery = message.qId;
 

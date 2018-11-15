@@ -1,4 +1,5 @@
 const saveMessage = require('../clients/saveMessage');
+const logger = require("../winston");
 
 module.exports = (message) => saveMessage({
   ...message,
@@ -6,6 +7,6 @@ module.exports = (message) => saveMessage({
   status : 'PENDING'
 },
 () => {
-  console.log("Error saving PENDING message");
+  logger.error("Error saving PENDING message");
 }
 )

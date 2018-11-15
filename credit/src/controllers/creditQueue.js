@@ -5,6 +5,7 @@ const kue = require('kue'),
   } */);
 const checkCredit = require('./checkCredit');
 const rollBackCredit = require('./rollBackCredit');
+const logger = require("../winston");
 
 
 queue.process("test message", function (job, done) {
@@ -18,11 +19,11 @@ queue.process("test message", function (job, done) {
     })
     done()
   })
-  .catch(err => console.log(err))
+  .catch(err => logger.error(err))
 })
 
 queue.on('job enqueue',function(id,type){
-  console.log("enqueue to creditChecked",id,type)
+  logger.info("enqueue to creditChecked",id,type)
 })
 
 queue.process("roll back", function (job, done) {

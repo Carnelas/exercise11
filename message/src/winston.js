@@ -19,8 +19,5 @@ const logger = createLogger({
     }),
   ]
 });
-logger.info('Hello world');
-logger.warn('Warning message');
-logger.debug('Debugging info');
 
 module.exports = logger;

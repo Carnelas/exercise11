@@ -1,6 +1,8 @@
 const database = require("../database");
 const Message = require("../models/message");
 const { cleanClone } = require("../utils");
+const logger = require("../winston");
+
 
 function saveMessageReplica(replica, retries) {
   if (retries > 0) {
@@ -8,12 +10,12 @@ function saveMessageReplica(replica, retries) {
     return replica
       .save()
       .then(doc => {
-        console.log("Message replicated successfully", replica);
+        logger.info("Message replicated successfully", replica);
         return doc;
       })
       .catch(err => {
-        console.log("Error while saving message replica", err);
-        console.log("Retrying...");
+        logger.error("Error while saving message replica", err);
+        logger.info("Retrying...");
         return saveMessageReplica(replica, retries - 1);
       });
   }
@@ -32,11 +34,11 @@ function saveMessageTransaction(newValue, params) {
     .then(doc => {
       if (doc == null){
         return message.save().then(doc => {
-          console.log("Message saved successfully:", doc);
+          logger.info("Message saved successfully:", doc);
            return cleanClone(doc);
         })
       }else {
-        console.log("Message status updated successfully:", newValue)
+        logger.info("Message status updated successfully:", newValue)
         return cleanClone(doc);
       }     
     })
@@ -46,7 +48,7 @@ function saveMessageTransaction(newValue, params) {
       return newValue;
     })
     .catch(err => {
-      console.log("Error while saving message", err);
+      logger.error("Error while saving message", err);
       throw err;
     });
 }

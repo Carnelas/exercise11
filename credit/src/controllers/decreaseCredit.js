@@ -1,4 +1,5 @@
 const updateCreditTransaction = require('../transactions/updateCredit')
+const logger = require("../winston");
 
 module.exports = function decreaseCredit() {
 
@@ -16,7 +17,7 @@ module.exports = function decreaseCredit() {
         let error = "Not enough credit";
         cb(undefined, error);
       } else {
-        console.log('added to queue')
+        logger.info('added to queue')
       }
     }
   );

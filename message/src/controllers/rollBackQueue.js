@@ -1,4 +1,5 @@
 require('dotenv').config()
+const logger = require("../winston");
 const kue = require('kue'),
   queue = kue.createQueue(/* {
     redis: process.env.REDIS_PORT
@@ -7,6 +8,6 @@ const kue = require('kue'),
 
 module.exports = function (message){
   let job2 = queue.create('roll back', message).ttl(7000).save(function (err) {
-    console.log("Processing payment")
+    logger.info("Processing payment")
   });
 }
