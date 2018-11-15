@@ -1,4 +1,6 @@
+
 module.exports = function(req, res) {
-  res.sendStatus(200);
-  console.log("Canary");
+  res.status(200)
+  .send('Version 1');
+  console.log('version 1')
 };

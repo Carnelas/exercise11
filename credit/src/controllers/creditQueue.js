@@ -1,9 +1,8 @@
+require('dotenv').config()
 const kue = require('kue'),
-  queue = kue.createQueue(
-    {
-    redis: 'redis://redis:6379'
-  }
-  );
+  queue = kue.createQueue(/* {
+    redis: process.env.REDIS_PORT
+  } */);
 const checkCredit = require('./checkCredit');
 const rollBackCredit = require('./rollBackCredit');
 

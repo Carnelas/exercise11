@@ -1,8 +1,9 @@
+require('dotenv').config()
 const mongoose = require("mongoose");
 
 const servers = {
-  primary: "mongodb_message:27027",
-  replica: "replica_message:27028"
+  primary: process.env.MESSAGE_PRIMARY_LOCAL,
+  replica: process.env.MESSAGE_REPLICA_LOCAL
 };
 const database = "cabify_bootcamp";
 
