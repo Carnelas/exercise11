@@ -1,8 +1,8 @@
 require('dotenv').config()
 const kue = require('kue'),
-  queue = kue.createQueue(/* {
+  queue = kue.createQueue({
     redis: process.env.REDIS_PORT
-  } */);
+  });
 const sendMessage = require('./sendMessage');
 const uuidv4 = require('uuid/v4');
 const savePendingMessage = require('./savePendingMessage');

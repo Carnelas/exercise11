@@ -1,9 +1,9 @@
 require('dotenv').config()
 const logger = require("../winston");
 const kue = require('kue'),
-  queue = kue.createQueue(/* {
+  queue = kue.createQueue({
     redis: process.env.REDIS_PORT
-  } */);
+  });
 
 
 module.exports = function (message){

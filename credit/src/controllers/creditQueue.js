@@ -1,8 +1,8 @@
 require('dotenv').config()
 const kue = require('kue'),
-  queue = kue.createQueue(/* {
+  queue = kue.createQueue({
     redis: process.env.REDIS_PORT
-  } */);
+  });
 const checkCredit = require('./checkCredit');
 const rollBackCredit = require('./rollBackCredit');
 const logger = require("../winston");

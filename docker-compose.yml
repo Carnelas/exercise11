@@ -23,34 +23,36 @@ services:
   #    - ./etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
   #  ports:
   #    - 48151:48151
-  # message:
+  message:
   #  deploy:
   #     replicas: 4
+   build: message/
   #  image: mariaalons/messagecanary:v1
-  #  expose:
-  #    - "9007"
-  #  links:
-  #    - balancer
-  #    - messageapp
-  #    - mongodb_message
-  #    - replica_message
-  #    - redis
-  #    - credit
-  #  depends_on:
-  #    - messageapp
-  #    - mongodb_message
-  #    - replica_message
-  #    - redis
+   expose:
+     - "9007"
+   ports:
+     - "9007:9007"
+   links:
+    #  - balancer
+     - messageapp
+     - mongodb_message
+     - replica_message
+     - redis
+     - credit
+   depends_on:
+     - messageapp
+     - mongodb_message
+     - replica_message
+     - redis
   #  environment:
   #    - SERVICE_NAME=service-v1
-  # message1:
+  #message1:
   #  deploy:
   #     replicas: 4
   #  build: message/
   #  expose:
   #    - "9007"
   #  links:
-  #    - balancer
   #    - messageapp
   #    - mongodb_message
   #    - replica_message
@@ -63,18 +65,18 @@ services:
   #    - redis
   #  environment:
   #    - SERVICE_NAME=service-v2
-  # credit:
-  #  build: credit/
-  #  ports:
-  #    - "9017:9017"
-  #  links:
-  #    - mongodb_credit
-  #    - replica_credit
-  #    - redis
-  #  depends_on:
-  #    - mongodb_credit
-  #    - replica_credit
-  #    - redis
+  credit:
+   build: credit/
+   ports:
+     - "9017:9017"
+   links:
+     - mongodb_credit
+     - replica_credit
+     - redis
+   depends_on:
+     - mongodb_credit
+     - replica_credit
+     - redis
 
   messageapp:
    image: cabify/backend-bootcamp-messageapp:exercise10
