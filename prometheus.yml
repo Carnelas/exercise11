@@ -17,4 +17,4 @@ scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: "15s"
     static_configs:
-    - targets: ['localhost:9010']
+    - targets: ['localhost:9090']

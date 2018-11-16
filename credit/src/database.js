@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const logger = require("./winston");
 
 const servers = {
-  primary: process.env.CREDIT_PRIMARY_LOCAL,
-  replica: process.env.CREDIT_REPLICA_LOCAL
+  primary: process.env.CREDIT_PRIMARY_DOCKER,
+  replica: process.env.CREDIT_REPLICA_DOCKER
 };
 const database = "cabify_bootcamp";
 

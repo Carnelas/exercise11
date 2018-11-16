@@ -79,7 +79,7 @@ services:
   messageapp:
    image: cabify/backend-bootcamp-messageapp:exercise10
    ports:
-     - "3001:3001"
+     - "3000:3000"
 
   mongodb_credit:
    image: mongo
@@ -117,18 +117,18 @@ services:
      - 6379:6379
 
 
-  # prometheus:
-  #  image: prom/prometheus:v2.3.0
-  #  volumes:
-  #    - ./prometheus.yml:/etc/prometheus/prometheus.yml
-  #  command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
-  #  ports:
-  #    - 9090:9090
+  prom:
+   image: prom/prometheus:v2.3.0
+   volumes:
+     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+   command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
+   ports:
+     - 9090:9090
 
   grafana:
     image: grafana/grafana:5.1.0
     user: "104"
-    # depends_on:
-    #   - prometheus
+    depends_on:
+      - prom
     ports:
-      - 3000:3000
+      - 3010:3000

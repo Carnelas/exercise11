@@ -13,7 +13,7 @@ module.exports = function(message, done) {
 
   if (message.payment === true) {
     const postOptions = {
-      host: process.env.MESSAGEAPP_HOST_LOCAL,
+      host: process.env.MESSAGEAPP_HOST,
       port: process.env.MESSAGEAPP_PORT,
       path: "/message",
       method: "post",
