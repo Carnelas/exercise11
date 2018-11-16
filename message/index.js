@@ -3,6 +3,7 @@ const express = require("express");
 require("./src/controllers/addToQueue");
 const addToQueue = require("./src/controllers/addToQueue");
 const logger = require("./src/winston");
+const getProme = require("./src/clients/getProme");
 
 const bodyParser = require("body-parser");
 const {
@@ -54,6 +55,8 @@ app.get("/messages/:id/status", getOneMessage);
 app.get("/health", getStatus);
 
 app.get("/version", getVersion);
+
+app.get("/metrics", getProme);
 
 app.use(function(err, req, res, next) {
   logger.info(res.body);

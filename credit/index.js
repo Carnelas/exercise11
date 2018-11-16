@@ -46,6 +46,6 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9017, function() {
-  log.info("App started on PORT 9017");
+  logger.info("App started on PORT 9017");
 });
 
