@@ -4,6 +4,7 @@ require("./src/controllers/addToQueue");
 const addToQueue = require("./src/controllers/addToQueue");
 const logger = require("./src/winston");
 const getProme = require("./src/clients/getProme");
+const countError = require("./metrics")
 
 const bodyParser = require("body-parser");
 const {
@@ -40,6 +41,11 @@ const messageSchema = {
     }
   }
 };
+
+app.use(function(req, res, next) {
+  countError();
+  next();
+})
 
 app.post(
   "/messages",

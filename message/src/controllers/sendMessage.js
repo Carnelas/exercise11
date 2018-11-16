@@ -5,6 +5,7 @@ const rollBackQueue = require("./rollBackQueue");
 const braker = require("../circuitBreaker");
 const util = require("util");
 const logger = require("../winston");
+const countError = require("../../metrics");
 
 module.exports = function(message, done) {
   logger.info(message);
@@ -54,6 +55,7 @@ module.exports = function(message, done) {
               },
               () => {
                 rollBackQueue();
+                countError();
                 logger.warn("Internal server error: SERVICE ERROR");
               },
               idQuery
@@ -73,13 +75,16 @@ module.exports = function(message, done) {
             },
             () => {
               logger.warn("Internal server error: TIMEOUT");
+              countError();
             },
             idQuery
           );
           reject("TIMEOUT");
         });
-        postReq.on("error", () => {});
-
+        postReq.on("error", err => {
+          countError();
+          logger.error("err");
+        });
         postReq.write(body);
         postReq.end();
       });
